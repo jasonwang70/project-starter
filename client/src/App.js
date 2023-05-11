@@ -12,17 +12,17 @@ function Navigation(props) {
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark shadow mb-3">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          Micro Blog
+          Lo Recipe
         </Link>
         <ul className="navbar-nav me-auto">
           <li className="nav-item">
             <NavLink className="nav-link" to="/posts/new">
-              Create a Micro Post
+              Search
             </NavLink>
           </li>
           <li className="nav-item">
             <NavLink className="nav-link" to="/about-us">
-              About Us
+              Favorites
             </NavLink>
           </li>
         </ul>
@@ -40,8 +40,6 @@ function App() {
           <Routes>
             <Route path="/posts/new" element={<PostFormPage />} />
             <Route path="/posts/:id" element={<ShowPostPage />} />
-            <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/" element={<PostsListPage />} />
           </Routes>
         </div>
       </div>
