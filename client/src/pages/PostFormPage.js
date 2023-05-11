@@ -8,16 +8,26 @@ function PostFormPage() {
   const [error, setError] = useState(false);
   const [instructions, setInstructions] = useState([]);
   const [ingrediants, setIngrediants] = useState([]);
+  const [recipeName, setRecipeName] = useState([]);
   const [numOfRecipe, setNumOfRecipe] = useState(0);
-
+  const [loading, setLoading] = useState(false);
+  let str = [''];
+  let strIngrediants = [''];
+  let promises = [];
+  let promisesIngrediants = [];
+  let countMiss = 0;
+  
   const handleContentChange = (event) => {
     setContent(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     setIngrediants([]);
+    setRecipeName([]);
     setInstructions([]);
     setNumOfRecipe(0);
+    str = [''];
+    strIngrediants = ['']
     event.preventDefault();
     try {
       let response = await fetch(`https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&tags=under_30_minutes&q=${content}`, {
@@ -30,11 +40,37 @@ function PostFormPage() {
       }).then(res => res.json()).then(data => {
         for(let i = 0; i < data.results.length; i++) { // For each recipe
           if(data.results[i].instructions !== undefined && data.results[i].sections !== undefined) {
-            setInstructions(prevArray => [...prevArray, data.results[i].instructions]);
-            setIngrediants(previousArray => [...previousArray, data.results[i].sections])
-            setNumOfRecipe(numOfRecipe => numOfRecipe + 1)
+            setRecipeName(pArray => [...pArray, data.results[i].name]);
+            for(let j = 0; j < data.results[i].instructions.length; j++) {
+              //{console.log(data.results[i].instructions[j].display_text)}
+              str[0] = str[0] + data.results[i].instructions[j].display_text + " ";
+            }
+            promises.push(str[0]);
+            for(let n = 0; n < data.results[i].sections.length; n++) {
+              for(let m = 0; m < data.results[i].sections[n].components.length; m++){
+                strIngrediants[0] = strIngrediants[0] + data.results[i].sections[n].components[m].raw_text + ", ";
+              }
+            }
+            promisesIngrediants.push(strIngrediants[0]);
+            setNumOfRecipe(numOfRecipe => numOfRecipe + 1);
+          } else {
+            countMiss++;
           }
+          str[0] = "";
+          strIngrediants[0] = "";
         }
+        Promise.all(promises).then(response => {
+          for(let k = 0; k < data.results.length - countMiss; k++) {
+            setInstructions(prev => [...prev, promises[k]]);
+          }
+        });
+        Promise.all(promisesIngrediants).then(response => {
+          for(let k = 0; k < data.results.length - countMiss; k++) {
+            setIngrediants(prev2 => [...prev2, promisesIngrediants[k]]);
+          }
+        });
+        {console.log(countMiss)}
+        setLoading(true);
       });
 
       if (response.ok) {
@@ -69,29 +105,25 @@ function PostFormPage() {
         </div>
       </form>
       <div>
-        {(numOfRecipe !== 0) ? 
+        {(numOfRecipe !== 0 && loading) ? 
         <table>
           <thead>
             <tr>
+              <th>Name</th>
               <th>Instructions</th>
-              <th>Ingrediants</th>
+              <th>ingrediants</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                {instructions.map((index_instr) => 
-                    <div>{index_instr.map((all_instructions) => all_instructions.display_text)}</div>
-                )}
-              </td>
-              <td>
-                {ingrediants.map((sect) => 
-                    <div>{sect.map((comp) => 
-                      <div>{(comp.components.map(a => a.raw_text))}</div>
-                    )}</div>
-                )}
-              </td>
-            </tr>
+            {recipeName.map((index, i) => {
+              return (
+                <tr>
+                  <td>{recipeName[i]}</td>
+                  <td>{instructions[i]}</td>
+                  <td>{ingrediants[i]}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table> : <></>}
       </div>
