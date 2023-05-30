@@ -69,7 +69,6 @@ function PostFormPage() {
             setIngrediants(prev2 => [...prev2, promisesIngrediants[k]]);
           }
         });
-        {console.log(countMiss)}
         setLoading(true);
       });
 
@@ -112,6 +111,7 @@ function PostFormPage() {
               <th>Name</th>
               <th>Instructions</th>
               <th>ingrediants</th>
+              <tr>like button</tr>
             </tr>
           </thead>
           <tbody>
@@ -121,6 +121,7 @@ function PostFormPage() {
                   <td>{recipeName[i]}</td>
                   <td>{instructions[i]}</td>
                   <td>{ingrediants[i]}</td>
+                  <td><button>Like</button></td>
                 </tr>
               );
             })}

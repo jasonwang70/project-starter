@@ -1,9 +1,12 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
-import PostsListPage from "./pages/PostsListPage";
-import PostFormPage from "./pages/PostFormPage";
-import ShowPostPage from "./pages/ShowPostPage";
-import AboutUsPage from "./pages/AboutUsPage";
+import { AuthProvider } from "./context/AuthContext";
+import AuthButton from "./components/AuthButton";
+import PrivateRouteRequiresAuth from "./components/PrivateRouteRequiresAuth";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage"
+import LandingPage from "./pages/StartingPage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 import "./App.css";
 
@@ -16,34 +19,42 @@ function Navigation(props) {
         </Link>
         <ul className="navbar-nav me-auto">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/posts/new">
-              Search
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/about-us">
+            <NavLink className="nav-link" to="/posts/favorites">
               Favorites
             </NavLink>
           </li>
         </ul>
       </div>
+      <AuthButton />
     </nav>
   );
 }
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navigation />
-      <div className="container-xl text-center">
-        <div className="row justify-content-center">
-          <Routes>
-            <Route path="/posts/new" element={<PostFormPage />} />
-            <Route path="/posts/:id" element={<ShowPostPage />} />
-          </Routes>
+    <AuthProvider>
+      <BrowserRouter>
+        <Navigation />
+        <div className="container-xl text-center">
+          <div className="row justify-content-center">
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/posts/favorites"
+                element={
+                  <PrivateRouteRequiresAuth>
+                    {/* In react-router v6 we protect routes like this */}
+                    <FavoritesPage />
+                  </PrivateRouteRequiresAuth>
+                }
+              />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/" element={<LandingPage />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
