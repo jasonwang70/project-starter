@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import ErrorAlert from "../components/ErrorAlert";
 import { Accordion, Card } from "react-bootstrap";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeartCirclePlus } from "@fortawesome/free-solid-svg-icons";
 function PostFormPage() {
   const [content, setContent] = useState("");
   const [success, setSuccess] = useState(false);
@@ -136,7 +137,7 @@ function PostFormPage() {
                       type="button"
                       data-bs-toggle="collapse"
                       onClick={() => {
-                        if(showIngrediants[i] === false) {
+                        if (showIngrediants[i] === false) {
                           const newArr = [...showIngrediants];
                           newArr[i] = true;
                           setShowIngrediants(newArr);
@@ -148,6 +149,9 @@ function PostFormPage() {
                       }}
                     >
                       <strong>{recipeName[i]}</strong>
+                      <button className="btn btn-danger">
+                        <FontAwesomeIcon icon={faHeartCirclePlus} />
+                      </button>
                     </button>
                     <div
                       id="collapseOne"
@@ -158,7 +162,7 @@ function PostFormPage() {
                       <div className="accordion-body">
                         <p>{instructions[i]}</p>
                         <div className="container mt-4 rounded border">
-                          {(showIngrediants[i] === true) ? ingrediants[i] : ""}
+                          {showIngrediants[i] === true ? ingrediants[i] : ""}
                         </div>
                       </div>
                     </div>

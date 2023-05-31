@@ -8,7 +8,7 @@ const AuthButton = () => {
 
   if (!auth.isAuthenticated) {
     return (
-      <Link className="btn btn-primary" to="/login">
+      <Link className="btn btn-primary " to="/login">
         Login
       </Link>
     );
@@ -20,7 +20,7 @@ const AuthButton = () => {
 
   return (
     <div className="text-white">
-      Welcome! {auth.user.firstName}
+      Welcome!
       <button className="btn btn-primary" onClick={logout}>
         Logout
       </button>
