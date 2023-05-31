@@ -49,13 +49,18 @@ function LoginPage() {
   }
 
   return (
-    <div className="col-10 col-md-8 col-lg-7">
+    <div className="col-5 mt-5">
+      <h1>LOGIN</h1>
+      <br></br>
+      <p className="text-align: left">
+        Sign in with your data that you entered during your registration.
+      </p>
       <form onSubmit={login}>
         <div className="form-row">
           {errorMessage}
           <input
             type="email"
-            className="form-control"
+            className="form-control mt-2"
             name="email"
             placeholder="Email"
             value={data.email}
@@ -63,18 +68,23 @@ function LoginPage() {
           />
           <input
             type="password"
-            className="form-control"
+            className="form-control mt-2"
             name="password"
             placeholder="Password"
             value={data.password}
             onChange={fieldChanged("password")}
           />
-          <button type="submit" className="btn btn-primary ml-auto">
+          <button type="submit" className="btn btn-primary ml-auto mt-5">
             Login
           </button>
         </div>
       </form>
-      <Link to="/signup">Don't have an account?</Link>
+      <p className="mt-4">
+        Don't have a account?
+        <Link to="/signup" className="mt-2">
+          Sign Up!
+        </Link>
+      </p>
     </div>
   );
 }

@@ -6,7 +6,12 @@ function SignUpPage() {
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [data, setData] = useState({ email: "", password: "", firstName: "", lastName: "" });
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+  });
   const [error, setError] = useState(false);
 
   const from = location.state?.from?.pathname || "/";
@@ -49,13 +54,13 @@ function SignUpPage() {
   }
 
   return (
-    <div className="col-10 col-md-8 col-lg-7">
+    <div className="col-5">
       <form onSubmit={signup}>
         <div className="form-row">
           {errorMessage}
           <input
             type="email"
-            className="form-control"
+            className="form-control mt-4"
             name="email"
             placeholder="Email"
             value={data.email}
@@ -63,7 +68,7 @@ function SignUpPage() {
           />
           <input
             type="password"
-            className="form-control"
+            className="form-control mt-2"
             name="password"
             placeholder="Password"
             value={data.password}
@@ -71,7 +76,7 @@ function SignUpPage() {
           />
           <input
             type="firstName"
-            className="form-control"
+            className="form-control mt-2"
             name="firstName"
             placeholder="First name"
             value={data.firstName}
@@ -79,13 +84,13 @@ function SignUpPage() {
           />
           <input
             type="lastName"
-            className="form-control"
+            className="form-control mt-2"
             name="lastName"
             placeholder="Last name"
             value={data.lastName}
             onChange={fieldChanged("lastName")}
           />
-          <button type="submit" className="btn btn-primary ml-auto">
+          <button type="submit" className="btn btn-primary ml-auto mt-5">
             Sign Up
           </button>
         </div>

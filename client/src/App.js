@@ -4,7 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import AuthButton from "./components/AuthButton";
 import PrivateRouteRequiresAuth from "./components/PrivateRouteRequiresAuth";
 import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage"
+import SignUpPage from "./pages/SignUpPage";
 import LandingPage from "./pages/StartingPage";
 import FavoritesPage from "./pages/FavoritesPage";
 
@@ -24,8 +24,8 @@ function Navigation(props) {
             </NavLink>
           </li>
         </ul>
+        <AuthButton />
       </div>
-      <AuthButton />
     </nav>
   );
 }
