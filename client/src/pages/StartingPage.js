@@ -12,6 +12,7 @@ function PostFormPage() {
   const [recipeName, setRecipeName] = useState([]);
   const [numOfRecipe, setNumOfRecipe] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [showIngrediants, setShowIngrediants] = useState([]);
   let str = [""];
   let strIngrediants = [""];
   let promises = [];
@@ -72,6 +73,7 @@ function PostFormPage() {
               }
               promisesIngrediants.push(strIngrediants[0]);
               setNumOfRecipe((numOfRecipe) => numOfRecipe + 1);
+              setShowIngrediants((prev3) => [...prev3, false]);
             } else {
               countMiss++;
             }
@@ -133,6 +135,17 @@ function PostFormPage() {
                       className="accordion-button collapsed rounded border"
                       type="button"
                       data-bs-toggle="collapse"
+                      onClick={() => {
+                        if(showIngrediants[i] === false) {
+                          const newArr = [...showIngrediants];
+                          newArr[i] = true;
+                          setShowIngrediants(newArr);
+                        } else {
+                          const newArr = [...showIngrediants];
+                          newArr[i] = false;
+                          setShowIngrediants(newArr);
+                        }
+                      }}
                     >
                       <strong>{recipeName[i]}</strong>
                     </button>
@@ -145,7 +158,7 @@ function PostFormPage() {
                       <div className="accordion-body">
                         <p>{instructions[i]}</p>
                         <div className="container mt-4 rounded border">
-                          {ingrediants[i]}
+                          {(showIngrediants[i] === true) ? ingrediants[i] : ""}
                         </div>
                       </div>
                     </div>
