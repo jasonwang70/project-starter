@@ -54,7 +54,10 @@ function SignUpPage() {
   }
 
   return (
-    <div className="col-5">
+    <div className="col-5 mt-5">
+      <h1>Sign Up</h1>
+      <br></br>
+      <p className="">Free. Simple. Easy</p>
       <form onSubmit={signup}>
         <div className="form-row">
           {errorMessage}

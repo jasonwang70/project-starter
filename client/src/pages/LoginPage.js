@@ -50,7 +50,7 @@ function LoginPage() {
 
   return (
     <div className="col-5 mt-5">
-      <h1>LOGIN</h1>
+      <h1>Sign In</h1>
       <br></br>
       <p className="text-align: left">
         Sign in with your data that you entered during your registration.
